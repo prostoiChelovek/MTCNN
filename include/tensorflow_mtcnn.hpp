@@ -34,10 +34,12 @@ private:
 
 };
 
+
 static mtcnn *tf_creator(void) {
     return new tf_mtcnn();
 }
 
 REGISTER_MTCNN_CREATOR(tensorflow, tf_creator);
+
 
 #endif

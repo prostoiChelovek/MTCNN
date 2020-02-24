@@ -390,11 +390,4 @@ void caffe_mtcnn::run_ONet(const cv::Mat& img,
 		reg_data+=reg_page_size;
 		points_data+=points_page_size; 
 	}
-}	
-
-static mtcnn * caffe_creator(void)
-{
-	return new caffe_mtcnn();
 }
-
-REGISTER_MTCNN_CREATOR(caffe,caffe_creator);

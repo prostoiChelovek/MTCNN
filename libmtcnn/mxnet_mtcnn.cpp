@@ -665,14 +665,3 @@ int mxnet_mtcnn::run_preload_ONet(const cv::Mat& img, face_box& input_box, face_
 	return -1;
 
 }	
-
-
-
-static mtcnn * mxnet_creator(void)
-{
-	return new mxnet_mtcnn();
-}
-
-REGISTER_MTCNN_CREATOR(mxnet,mxnet_creator);
-
-

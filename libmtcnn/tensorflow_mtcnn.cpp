@@ -605,6 +605,3 @@ void tf_mtcnn::detect(cv::Mat& img, std::vector<face_box>& face_list)
 	}
 
 }
-
-
-

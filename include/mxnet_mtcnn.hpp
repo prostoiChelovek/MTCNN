@@ -59,4 +59,12 @@ class mxnet_mtcnn: public mtcnn {
 };
 
 
+static mtcnn * mxnet_creator(void)
+{
+    return new mxnet_mtcnn();
+}
+
+REGISTER_MTCNN_CREATOR(mxnet,mxnet_creator);
+
+
 #endif
