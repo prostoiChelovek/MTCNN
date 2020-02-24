@@ -17,47 +17,38 @@
 
 typedef std::map<std::string, mtcnn_factory::creator> creator_map;
 
-static creator_map& get_registery(void)
-{
-	static creator_map * instance_ptr=new creator_map();
+static creator_map &get_registery() {
+    static auto *instance_ptr = new creator_map();
 
-	return *instance_ptr;
+    return *instance_ptr;
 }
 
-void mtcnn_factory::register_creator(const std::string& name, creator& create_func)
-{
-	creator_map& registery=get_registery();
+void mtcnn_factory::register_creator(const std::string &name, creator &create_func) {
+    creator_map &registery = get_registery();
 
-	registery[name]=create_func;
+    registery[name] = create_func;
 }
 
-std::vector<std::string> mtcnn_factory::list(void)
-{
-	std::vector<std::string> ret;
+std::vector<std::string> mtcnn_factory::list() {
+    std::vector<std::string> ret;
 
-	creator_map& registery=get_registery();
+    creator_map &registery = get_registery();
+    for (auto &el : registery) {
+        ret.push_back(el.first);
+    }
 
-	creator_map::iterator it=registery.begin();
-
-	while(it!=registery.end())
-	{
-		ret.push_back(it->first);
-		it++;
-	}
-
-	return ret;
+    return ret;
 }
 
 
-mtcnn * mtcnn_factory::create_detector(const std::string& name)
-{
+mtcnn *mtcnn_factory::create_detector(const std::string &name) {
 
-	creator_map& registery=get_registery();
+    creator_map &registery = get_registery();
 
-	if(registery.find(name)== registery.end())
-		return nullptr;
+    if (registery.find(name) == registery.end())
+        return nullptr;
 
-	creator func=registery[name];
+    creator func = registery[name];
 
-	return func();
+    return func();
 }
