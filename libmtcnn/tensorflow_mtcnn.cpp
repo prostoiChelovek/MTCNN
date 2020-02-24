@@ -608,10 +608,3 @@ void tf_mtcnn::detect(cv::Mat& img, std::vector<face_box>& face_list)
 
 
 
-static mtcnn * tf_creator(void)
-{
-	return new tf_mtcnn();
-}
-
-REGISTER_MTCNN_CREATOR(tensorflow,tf_creator);
-

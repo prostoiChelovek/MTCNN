@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+
 #include <unistd.h>
 #include <opencv2/opencv.hpp>
 #include <iostream>
@@ -20,6 +21,7 @@
 #include <string>
 #include <vector>
 
+#include "tensorflow_mtcnn.hpp"
 #include "mtcnn.hpp"
 #include "utils.hpp"
 
@@ -29,7 +31,7 @@
 
 int main(int argc, char * argv[])
 {
-    const char * type = "mxnet";
+    const char *type = "tensorflow";
     double ftick, etick;
     double ticksPerUs;
 
@@ -69,15 +71,16 @@ int main(int argc, char * argv[])
         return 1;
     }
 
+    p_mtcnn->set_threshold(0.75, 0.81, 0.88);
+
     ticksPerUs = cv::getTickFrequency() / 1000000;
 
     p_mtcnn->load_model(model_dir);
-    cv::namedWindow(DISP_WINNANE, cv::WINDOW_AUTOSIZE);
     cv::Mat frame;
     std::vector<face_box> face_info;
 
     do {
-            camera >> frame;
+        camera >> frame;
 
             if (!frame.data) {
                 std::cerr << "Capture video failed" << std::endl;
@@ -98,7 +101,7 @@ int main(int argc, char * argv[])
                 /* draw landmark */
                 for (int l = 0; l < 5; l++) {
                     cv::circle(frame, cv::Point(box.landmark.x[l],
-                        box.landmark.y[l]), 1, cv::Scalar(0, 0, 255), 1.8);
+                                                box.landmark.y[l]), 5, cv::Scalar(0, 0, 255), -1);
                 }
             }
 

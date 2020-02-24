@@ -23,14 +23,21 @@ class tf_mtcnn: public mtcnn {
 		void run_PNet(const cv::Mat& img, scale_window& win, std::vector<face_box>& box_list);
 
 
-		void run_RNet(const cv::Mat& img,std::vector<face_box>& pnet_boxes, std::vector<face_box>& output_boxes);
-		void run_ONet(const cv::Mat& img,std::vector<face_box>& rnet_boxes, std::vector<face_box>& output_boxes);
-	private:
+    void run_RNet(const cv::Mat &img, std::vector<face_box> &pnet_boxes, std::vector<face_box> &output_boxes);
 
-		TF_Session * sess_;
-		TF_Graph  *  graph_;
+    void run_ONet(const cv::Mat &img, std::vector<face_box> &rnet_boxes, std::vector<face_box> &output_boxes);
+
+private:
+
+    TF_Session *sess_;
+    TF_Graph *graph_;
 
 };
 
+static mtcnn *tf_creator(void) {
+    return new tf_mtcnn();
+}
+
+REGISTER_MTCNN_CREATOR(tensorflow, tf_creator);
 
 #endif
